@@ -76,13 +76,49 @@ products.forEach((product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-addToCart" data-product-id="${product.id}" >
             Add to Cart
           </button>
         </div>
     `
 })
-console.log(productsHTML);
+// console.log(productsHTML);
+
+//step 9 add the data attribute to the add to cart btn
 
 // step 4 display on the browser / DOM 
 document.querySelector('.js-products-grid').innerHTML = productsHTML
+
+// step 6 making the add to cart btn interactive (note that there is a step 5 on the html page ) 
+
+ document.querySelectorAll('.js-addToCart').forEach((btn) => {
+   btn.addEventListener('click', () => {
+    //step 10 retreive all the data attributes we set in step 9 everytime we click the add to cart btn
+    //  console.log(btn.dataset.productName)
+
+    //step 11 save it to a variable and push it to the cart as an object
+    const productId = btn.dataset.productId
+
+    // increasing the quantity in the cart
+    let matchingItem;
+
+    cart.forEach((item) => {
+      if(productId === item.productId){
+        matchingItem = item;  // note this saves the item object in the matchingItem variable if the product names are the same
+      }
+    })
+
+    if(matchingItem){
+      matchingItem.quantity += 1;
+    }else{
+      cart.push({
+          productId,
+          quantity: 1,
+      })
+    }
+    console.log(cart)
+    
+    
+     
+   })
+ })
